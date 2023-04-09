@@ -1,0 +1,9 @@
+﻿  Blinds.cpp
+  Button.cpp
+  Delay.cpp
+  Encoder.cpp
+  main.cpp
+  StepperDriver.cpp
+  StepperMotor.cpp
+  Generating Code...
+  BlindsOpenerSimulator.vcxproj -> C:\Users\Mike\Documents\Git\BlindsOpenerSimulator\x64\Debug\BlindsOpenerSimulator.exe
