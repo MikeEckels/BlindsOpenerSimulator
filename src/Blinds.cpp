@@ -30,7 +30,7 @@ void Blinds::Open() {
 }
 
 void Blinds::Close() {
-	if (this->openState == ALL_OPEN) {
+	if (this->openState != ALL_CLOSED) {
 		this->slideMotor.SetDirection(CCW);
 		this->slideMotor.Enable();
 		this->slideMotor.MoveDegrees(Blinds::mmToDegrees(this->maxDistanceMM));
@@ -62,14 +62,14 @@ void Blinds::OpenShades() {
 }
 
 void Blinds::CloseShades() {
-	if (this->openState != ALL_CLOSED) {
+	if (this->openState == SHADES_OPEN) {
 		this->rotateMotor.SetDirection(CCW);
 		this->rotateMotor.Enable();
 		this->rotateMotor.MoveDegrees(90.0f);
 		this->rotateMotor.Disable();
 		std::cout << "[+] ClosedShades - RotateMotor Pos: " << this->rotateMotor.GetPositionDegrees() << " | PosSteps: " << this->rotateMotor.GetPositionSteps() << std::endl;
 	}
-	else {
+	else if (this->openState == ALL_CLOSED) {
 		std::cout << "[!] Shades are already closed" << std::endl;
 	}
 	this->openState = ALL_CLOSED;

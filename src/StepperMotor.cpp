@@ -10,12 +10,15 @@ void StepperMotor::handleStep() {
 	MotorDirection direction = StepperMotor::GetDirection();
 	if (direction != CW) {
 		this->numSteps = (this->numSteps-- <= 0) ? 0 : numSteps--;
+		this->position = (this->position - this->stepAngleDivisions <= 0) ? 0 : this->position - this->stepAngleDivisions;
 	}
 	else {
 		this->numSteps = (this->numSteps++ >= ULONG_MAX) ? ULONG_MAX : numSteps++;
+		this->position = (this->position + this->stepAngleDivisions >= FLT_MAX) ? FLT_MAX : this->position + this->stepAngleDivisions;
 	}
 	
-	this->position = (this->driver.GetDirection()) ? this->position + this->stepAngleDivisions : this->position - this->stepAngleDivisions;
+	//this->numSteps = (this->driver.GetDirection()) ? this->numSteps++ : this->numSteps--;
+	//this->position = (this->driver.GetDirection()) ? this->position + this->stepAngleDivisions : this->position - this->stepAngleDivisions;
 }
 
 void StepperMotor::Enable() {
