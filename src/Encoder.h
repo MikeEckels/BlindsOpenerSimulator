@@ -23,6 +23,7 @@ public:
 	void TurnRight(unsigned char numClicks);
 
 	signed char GetPosition() const;
+	signed char GetIncrement() const;
 	EncoderDirection GetDirection() const;
 	const char* GetDirectionStr() const;
 	bool GetButtonState() const;

@@ -23,6 +23,10 @@ signed char Encoder::GetPosition() const {
 	return this->position;
 }
 
+signed char Encoder::GetIncrement() const {
+	return this->incrementAmount;
+}
+
 EncoderDirection Encoder::GetDirection() const {
 	return this->direction;
 }

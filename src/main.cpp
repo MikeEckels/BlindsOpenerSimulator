@@ -1,17 +1,23 @@
 #include <conio.h>
 #include <iostream>
 
+#include "GUI.h"
 #include "Blinds.h"
 
 Button button = Button();
 Blinds blinds = Blinds();
+GUI gui = GUI(1280, 720, "Blinds Simulator", Theme::DARK);
 
 int main() {
+	gui.Init(&blinds);
 	blinds.SetVelocityTarget(SLIDER, LINEAR_MM_SEC, 200.0f);
 	blinds.SetVelocityTarget(ROTATOR, ANGULAR_RPM, 10.0f);
 	char key = ' ';
 
-	while (key != 'e') {
+	while (gui.Update()) {}
+	
+	return 0;
+	/*while (key != 'e') {
 		key = _getch();
 
 		switch (key) {
@@ -48,5 +54,5 @@ int main() {
 			blinds.GetState() ? blinds.Close() : blinds.Open();
 			std::cout << "SliderPositionMM: " << blinds.GetDistanceMM() << std::endl << std::endl;
 		}
-	}
+	}*/
 }
