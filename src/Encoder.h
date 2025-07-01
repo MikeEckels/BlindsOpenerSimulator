@@ -2,6 +2,7 @@
 #define ENCODER_H
 
 #include "Button.h"
+#include <iostream>
 
 enum EncoderDirection { NONE, LEFT, RIGHT };
 

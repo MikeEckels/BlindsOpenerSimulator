@@ -1,7 +1,7 @@
 #include "Blinds.h"
 
 Blinds::Blinds() {
-	this->attribs.encoder.SetIncrement(this->attribs.encoderIncrement);
+	this->encoder.SetIncrement(this->attribs.encoderIncrement);
 	this->attribs.drivePulleyRadiusMM = ((((float)this->attribs.pulleyTeeth * (float)this->attribs.beltPitchmm) / (float)M_PI) / 2.0f);
 }
 
@@ -80,19 +80,19 @@ void Blinds::CloseShades() {
 }
 
 void Blinds::PressEncoder() {
-	this->attribs.encoder.PressButton();
+	this->encoder.PressButton();
 }
 
 void Blinds::TurnEncoderLeft(unsigned char numClicks) {
-	this->attribs.encoder.TurnLeft(numClicks);
+	this->encoder.TurnLeft(numClicks);
 }
 
 void Blinds::TurnEncoderRight(unsigned char numClicks) {
-	this->attribs.encoder.TurnRight(numClicks);
+	this->encoder.TurnRight(numClicks);
 }
 
 void Blinds::SetEncoderIncrement(signed char value) {
-	Blinds::GetMechanicalAttribs().encoder.SetIncrement(value);
+	encoder.SetIncrement(value);
 }
 
 void Blinds::SetAccelerationTarget(MotorFunction function, float mmPerSec2) {

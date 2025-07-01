@@ -8,6 +8,7 @@ void Encoder::TurnLeft(unsigned char numClicks) {
 void Encoder::TurnRight(unsigned char numClicks) {
 	this->direction = RIGHT;
 	this->position = ((this->position + (this->incrementAmount * numClicks)) >= (signed char)127) ? (signed char)127 : (this->position + (this->incrementAmount * numClicks));
+	std::cout << +this->position << std::endl;
 }
 
 void Encoder::PressButton() {

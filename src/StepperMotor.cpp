@@ -3,7 +3,7 @@
 StepperMotor::StepperMotor() {
 	//driver.BindStepCallback([this]() {handleStep(); });
 	this->driver.BindStepCallback(std::bind(&StepperMotor::handleStep, this));
-	this->stepAngleDivisions = (this->stepAngle / this->driver.GetMicroSteps());
+	this->stepAngleDivisions = (this->stepAngle / (float)this->driver.GetMicroSteps());
 }
 
 void StepperMotor::handleStep() {

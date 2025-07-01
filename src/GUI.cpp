@@ -58,10 +58,12 @@ void GUI::InitImGui(const char* OpenGLSLVersion) {
 	this->viewport = ImGui::GetMainViewport();
 }
 
-void GUI::Init(Blinds* blinds) {
+void GUI::Init() {
 	GUI::InitGLFW(3, 3);
 	GUI::InitImGui("#version 330");
-	this->blinds = blinds;
+
+	this->blinds.SetVelocityTarget(SLIDER, LINEAR_MM_SEC, 200.0f);
+	this->blinds.SetVelocityTarget(ROTATOR, ANGULAR_RPM, 10.0f);
 }
 
 int GUI::Update() {
@@ -74,32 +76,36 @@ int GUI::Update() {
 		ImGui::SetNextWindowPos(this->viewport->WorkPos);
 		ImGui::SetNextWindowSize(this->viewport->WorkSize);
 
+		//All actions need callbacks..UI doesnt update
 		ImGui::Begin(this->windowName, nullptr, this->windowFlags);
-		if (ImGui::Button("Open Blinds")) { this->blinds->Open(); };
+		if (ImGui::Button("Open Blinds")) { this->blinds.Open(); };
 		ImGui::SameLine();
-		if (ImGui::Button("Close Blidns")) { this->blinds->Close(); };
+		if (ImGui::Button("Close Blinds")) { this->blinds.Close(); };
 		ImGui::SameLine();
-		ImGui::Button("Encoder Button");
-		if (ImGui::Button("Open Shades")) { this->blinds->OpenShades(); };
+		if (ImGui::Button("Encoder Button")) { this->blinds.PressEncoder(); }
 		ImGui::SameLine();
-		if (ImGui::Button("Close Shades")) { this->blinds->CloseShades(); };
+		ImGui::Text("%d", this->blinds.encoder.GetButtonState());
+		if (ImGui::Button("Open Shades")) { this->blinds.OpenShades(); };
+		ImGui::SameLine();
+		if (ImGui::Button("Close Shades")) { this->blinds.CloseShades(); };
 
 		ImGui::SameLine();
 		static int counter = 0;
 		float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
 		ImGui::PushButtonRepeat(true);
-		if (ImGui::ArrowButton("##left", ImGuiDir_Left)) { counter -= 25; }
+		if (ImGui::ArrowButton("##left", ImGuiDir_Left)) { this->blinds.TurnEncoderLeft(1); }
 		ImGui::SameLine(0.0f, spacing);
-		if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { counter += 25; }
+		if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { this->blinds.TurnEncoderRight(1); }
 		ImGui::PopButtonRepeat();
 		ImGui::SameLine();
-		ImGui::Text("%d", counter);
+		ImGui::Text("%d", +this->blinds.encoder.GetPosition());
+		//std::cout << +this->blinds.GetMechanicalAttribs().encoder.GetPosition() << std::endl;
 		
 		ImGui::ShowDemoWindow();
 		ImGui::NewLine();
-		ImGui::Text("Blinds Position mm - %d", this->blinds->GetMaxDistanceMM());
-		this->dist = this->blinds->GetDistanceMM();
-		ImGui::SliderInt(" ", &this->dist, 0, this->blinds->GetMaxDistanceMM());
+		ImGui::Text("Blinds Position mm - %d", this->blinds.GetMaxDistanceMM());
+		this->dist = this->blinds.GetDistanceMM();
+		ImGui::SliderInt(" ", &this->dist, 0, this->blinds.GetMaxDistanceMM());
 		ImGui::BeginDisabled();
 		ImGui::Text("Shades Position deg");
 		ImGui::SliderAngle(" ", (float*) & this->dist);

@@ -20,13 +20,14 @@ struct MechanicalAttribs {
 	const unsigned char rotateDegrees = 90;
 	const unsigned short maxDistanceMM = 1524; //5ft
 
-	Encoder encoder = Encoder();
+	
 	StepperMotor rotateMotor = StepperMotor();
 	StepperMotor slideMotor = StepperMotor();
 };
 
 class Blinds {
 private:
+	
 	//Velocities are mm/sec or RPM
 	float velocity = 0.0f;
 	float accelerationMM_Sec2 = 0.0f;
@@ -41,6 +42,7 @@ private:
 	float mmToDegrees(float distanceMM);
 
 public:
+	Encoder encoder = Encoder();
 	Blinds();
 	~Blinds() = default;
 

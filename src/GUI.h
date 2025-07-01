@@ -28,7 +28,7 @@ private:
 								   ImGuiWindowFlags_NoDecoration |
 								   ImGuiWindowFlags_NoSavedSettings;
 
-	Blinds* blinds = nullptr;
+	Blinds blinds = Blinds();
 
 	void InitGLFW(int major, int minor);
 	void InitImGui(const char* OpenGLSLVersion);
@@ -39,7 +39,7 @@ public:
 	GUI(int windowWidth, int windowHeight, const char* windowName, Theme::Colors colors);
 	~GUI() = default;
 
-	void Init(Blinds* blinds);
+	void Init();
 	int Update();
 
 };
